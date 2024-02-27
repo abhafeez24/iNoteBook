@@ -3,7 +3,8 @@ const User = require('../models/User')
 const { body, validationResult } = require('express-validator');
 const router = express.Router();
 const bcrypt = require('bcryptjs')
-const jwt = require('jsonwebtoken')
+const jwt = require('jsonwebtoken');
+const fetchuser = require('../middleware/fetchuser');
 
 const JWT_SECRET = 'IamaGoodb$oy'
 
@@ -62,7 +63,7 @@ router.post('/loginuser', [
 ], async (req, res)=> {
 
     //if error return bad request
-    const errors = await validationResult(req);
+    const errors = validationResult(req);
     if(!errors.isEmpty()) {
         return res.status(400).json({ errors: errors.array() })
     }
@@ -90,6 +91,20 @@ router.post('/loginuser', [
         const token = jwt.sign(data, JWT_SECRET)
         res.json({token})
 
+    } catch (error) {
+        console.log(error.message)
+        res.status(500).send('internal server error')
+    }
+})
+
+//Route 3:
+//Get User Details: LoggedIn
+//POST: "/api/auth/getuser"
+router.post('/getuser', fetchuser ,async (req, res) => {
+    try {
+        const userId = req.user.id;
+        const user = await User.findById(userId).select("-password")
+        res.send(user)
     } catch (error) {
         console.log(error.message)
         res.status(500).send('internal server error')
