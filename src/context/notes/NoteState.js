@@ -62,8 +62,21 @@ const addNote = async (title, description, tag) => {
 
 
 //Delete Note
-const deleteNote = (id) => {
+const deleteNote = async (id) => {
     //TODO : API Call
+    const response = await fetch(`${host}/api/notes/deletenote/${id}`, {
+      method: "DELETE",
+      mode: "cors", 
+      cache: "no-cache",    
+      credentials: "same-origin", 
+      headers: {
+        "Content-Type": "application/json",
+        "auth-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjVkZWZmNjk5ZjZmZmRjZjZhNWMxYjFkIn0sImlhdCI6MTcwOTExMzE5M30.pXw0QkHSzxkLZOs-YkbFFOrWPRC5EiULUgxC3R-cl98"
+        
+      }
+    });
+    const json = response.json(); 
+    console.log(json)
     console.log('delete note ' + id)
     const newNotes = notes.filter((note)=> {return note._id !== id})
     setNotes(newNotes)
@@ -74,7 +87,7 @@ const deleteNote = (id) => {
 const editNote = async (id, title, description, tag) => {
     //TODO : API 
     const response = await fetch(`${host}/api/notes/updatenote/${id}`, {
-    method: "POST",
+    method: "PUT",
     mode: "cors", 
     cache: "no-cache",    
     credentials: "same-origin", 
@@ -87,19 +100,21 @@ const editNote = async (id, title, description, tag) => {
     referrerPolicy: "no-referrer", 
     body: JSON.stringify({title, description, tag}), 
   });
-  const json = response.json(); 
+  const json = await response.json(); 
 
-
+    let newNotes = JSON.parse(JSON.stringify(notes))
     //logic
-    for (let index = 0; index < notes.length; index++) {
-        const element = notes[index];
+    for (let index = 0; index < newNotes.length; index++) {
+        const element = newNotes[index];
         if(element._id === id) {
             element.title = title
             element.description = description
             element.tag = tag
+            break
         }
         
     }
+    setNotes(newNotes)
 }
 
 
