@@ -8,7 +8,7 @@ export default function AddNote() {
 
     const [notes, setNotes] = useState({title: "", description: "", tag: "default"})
 
-    const handleClick = (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault()
         addNote(notes.title, notes.description, notes.tag)
     }
@@ -33,7 +33,7 @@ export default function AddNote() {
           <input type="checkbox" className="form-check-input" id="exampleCheck1"/>
           <label className="form-check-label" htmlFor="exampleCheck1">Check me out</label>
         </div>
-        <button type="submit" className="btn btn-primary" onClick={handleClick}>Submit</button>
+        <button type="submit" className="btn btn-primary" onClick={handleSubmit}>Add Note</button>
       </form>
       </div>
   )
