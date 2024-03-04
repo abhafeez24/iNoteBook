@@ -2,7 +2,7 @@ import React, {useContext, useState} from 'react'
 
 import noteContext from "../context/notes/NoteContext";
 
-export default function AddNote() {
+export default function AddNote(props) {
     const context = useContext(noteContext);
     const { addNote } = context;
 
@@ -12,6 +12,7 @@ export default function AddNote() {
         e.preventDefault()
         addNote(notes.title, notes.description, notes.tag)
         setNotes({title: "", description: "", tag:""})
+        props.showAlert("Notes Added Successfully", "primary")
     }
 
 

@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { useNavigate } from "react-router-dom";
 
 
-export default function Signup() {
+export default function Signup(props) {
     const [credentials, setCredentials] = useState({name: "", email: "", password: "", cpassword: ""})
     const navigate = useNavigate();
 
@@ -30,15 +30,15 @@ export default function Signup() {
               //save token to localStorage and redirect
               localStorage.setItem('token', json.token)
               navigate("/")  
+              props.showAlert('Account Created Successfully', 'success')
           } else {
-            alert("Password didn't Match")
+            props.showAlert('Invalid Credentials', 'danger')
           }
-
-          
   } 
 
   return (
     <div className='container'>
+    <h1>SignUp</h1>
       <form onSubmit={handleSubmit}>
             <div className="mb-3">
                 <label htmlFor="name" className="form-label">Name</label>

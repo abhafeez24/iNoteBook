@@ -1,12 +1,12 @@
 
 import Notes from '../componets/Notes'
 
-const Home = () => {
+const Home = (props) => {
 
 
   return (
     <div>
-      <Notes/>
+      <Notes showAlert={props.showAlert} />
     </div>
   )
 }

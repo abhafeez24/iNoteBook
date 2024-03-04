@@ -1,5 +1,3 @@
-
-
 import { useState } from 'react'
 import NoteContext from './NoteContext'
 
@@ -67,6 +65,7 @@ const deleteNote = async (id) => {
     const json = response.json(); 
     const newNotes = notes.filter((note)=> {return note._id !== id})
     setNotes(newNotes)
+    props.showAlert("Note Deleted", "info")
 }
 
 
