@@ -17,10 +17,13 @@ router.post('/createuser',[
 
     ], async (req, res) => {
 
+    let success;
+
     //if there are errors return bad request and errors
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
+        success = false
+      return res.status(400).json({ success, errors: errors.array() });
     }
 
 
@@ -28,7 +31,8 @@ router.post('/createuser',[
         //check whether the user with this email exist already
         let user = await User.findOne({email: req.body.email})
         if(user) {
-            return res.status(400).json({Error: 'Sorry a user with this email exists'})
+            success = false
+            return res.status(400).json({success, Error: 'Sorry a user with this email exists'})
         }
 
         //bcrypt password
@@ -47,8 +51,9 @@ router.post('/createuser',[
                 id: user.id
             }
         }
+        success = true
         const token = jwt.sign(data, JWT_SECRET)        //generate token synchronously
-        res.json({token})
+        res.json({success, token})
 
     } catch (error) {
         console.error(error.message)
@@ -79,7 +84,8 @@ router.post('/loginuser', [
         //password compare with hashPassword
         const passwordCompare = await bcrypt.compare(password, user.password)
         if(!passwordCompare) {
-            return res.status(400).json({error: 'Please try to login with correct credentials'})
+            success = false
+            return res.status(400).json({success, error: 'Please try to login with correct credentials'})
         }
 
         //generate token
@@ -88,8 +94,9 @@ router.post('/loginuser', [
                 id: user.id
             }
         }
+        success = true
         const token = jwt.sign(data, JWT_SECRET)
-        res.json({token})
+        res.json({success, token})
 
     } catch (error) {
         console.log(error.message)

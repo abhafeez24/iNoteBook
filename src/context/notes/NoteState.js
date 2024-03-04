@@ -41,22 +41,11 @@ const addNote = async (title, description, tag) => {
         "auth-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjVkZWZmNjk5ZjZmZmRjZjZhNWMxYjFkIn0sImlhdCI6MTcwOTExMzE5M30.pXw0QkHSzxkLZOs-YkbFFOrWPRC5EiULUgxC3R-cl98"
         
       },
-      redirect: "follow", 
-      referrerPolicy: "no-referrer", 
       body: JSON.stringify({title, description, tag}), 
     }); 
   
     //Logic
-    console.log('Add Note')
-    const note = {
-        "_id": "65deffc89f6ffdcsf6a534c1b24",
-        "user": "65deff699f6ffdcf6a5c1b1d",
-        "title": title,
-        "description": description,
-        "tag": tag,
-        "date": "2024-02-28T09:41:28.675Z",
-        "__v": 0
-      }
+    const note = await response.json();
     setNotes(notes.concat(note))
 }
 
@@ -76,8 +65,6 @@ const deleteNote = async (id) => {
       }
     });
     const json = response.json(); 
-    console.log(json)
-    console.log('delete note ' + id)
     const newNotes = notes.filter((note)=> {return note._id !== id})
     setNotes(newNotes)
 }

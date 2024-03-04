@@ -11,6 +11,7 @@ export default function AddNote() {
     const handleSubmit = (e) => {
         e.preventDefault()
         addNote(notes.title, notes.description, notes.tag)
+        setNotes({title: "", description: "", tag:""})
     }
 
 
@@ -23,17 +24,17 @@ export default function AddNote() {
       <form>
         <div className="mb-3">
           <label htmlFor="exampleInputEmail1" id="title" className="form-label">Title</label>
-          <input type="text" className="form-control" id="title" name="title" aria-describedby="emailHelp" onChange={onChange}/>
+          <input type="text" className="form-control" id="title" name="title" aria-describedby="emailHelp" value={notes.title} onChange={onChange} required minLength={5} />
         </div>
         <div className="mb-3">
           <label htmlFor="exampleInputPassword1" className="form-label">Description</label>
-          <input type="text" className="form-control" id="description" name="description" onChange={onChange}/>
+          <input type="text" className="form-control" id="description" name="description" value={notes.description} onChange={onChange} required minLength={5}/>
         </div>
         <div className="mb-3">
           <label htmlFor="exampleInputPassword1" className="form-label">Tag</label>
-          <input type="text" className="form-control" id="tag" name="tag" onChange={onChange}/>
+          <input type="text" className="form-control" id="tag" name="tag" value={notes.tag} onChange={onChange}/>
         </div>
-        <button type="submit" className="btn btn-primary" onClick={handleSubmit}>Add Note</button>
+        <button disabled={notes.title.length<5 || notes.description.length<5} type="submit" className="btn btn-primary" onClick={handleSubmit}>Add Note</button>
       </form>
       </div>
   )
