@@ -6,6 +6,7 @@ import Alert from "./componets/Alert";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import NoteState from "./context/notes/NoteState";
 import Login from "./componets/Login";
+import Footer from "./componets/Footer";
 import Signup from "./componets/Signup";
 import { useState } from "react";
 
@@ -41,6 +42,7 @@ function App() {
           </div>
         </Router>
       </NoteState>
+      <Footer />
     </>
   );
 }

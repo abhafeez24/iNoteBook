@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function Login(props) {
     const [credentials, setCredentials] = useState({email: "", password: ""})
@@ -27,11 +27,10 @@ export default function Login(props) {
           console.log(json)
           if(json.success) {
             //save token to localStorage and redirect
+            props.showAlert('LoggedIn Successfully', "success")
             localStorage.setItem('token', json.token)
             navigate("/")
-            props.showAlert('LoggedIn Successfully', "success")
           } else {
-            alert("Invalid Credentials")
             props.showAlert("Invalid Credentials", "danger")
           }
     }
@@ -42,11 +41,13 @@ export default function Login(props) {
             <div className="mb-3">
                 <label htmlFor="email" className="form-label">Email address</label>
                 <input type="email" className="form-control" value={credentials.email} onChange={onChange} name="email" id="email" aria-describedby="emailHelp" />
-                <div id="emailHelp" className="form-text">We'll never share your email with anyone else.</div>
+                
             </div>
             <div className="mb-3">
                 <label htmlFor="password" className="form-label">Password</label>
                 <input type="password" className="form-control" value={credentials.password}onChange={onChange} name="password" id="password" />
+                <div id="emailHelp" className="form-text">New User? <Link to='/signup' className='font-weight-bold '>SignUp</Link></div>
+                
             </div>
             <button type="submit" className="btn btn-primary">Login</button>
     </form>

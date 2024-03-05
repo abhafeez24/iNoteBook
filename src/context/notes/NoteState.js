@@ -17,7 +17,7 @@ const getNotes = async () => {
     credentials: "same-origin", 
     headers: {
       "Content-Type": "application/json",
-      "auth-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjVkZWZmNjk5ZjZmZmRjZjZhNWMxYjFkIn0sImlhdCI6MTcwOTExMzE5M30.pXw0QkHSzxkLZOs-YkbFFOrWPRC5EiULUgxC3R-cl98"
+      "auth-token": localStorage.getItem('token')
       
     }
   }); 
@@ -36,7 +36,7 @@ const addNote = async (title, description, tag) => {
       credentials: "same-origin", 
       headers: {
         "Content-Type": "application/json",
-        "auth-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjVkZWZmNjk5ZjZmZmRjZjZhNWMxYjFkIn0sImlhdCI6MTcwOTExMzE5M30.pXw0QkHSzxkLZOs-YkbFFOrWPRC5EiULUgxC3R-cl98"
+        "auth-token": localStorage.getItem('token')
         
       },
       body: JSON.stringify({title, description, tag}), 
@@ -58,11 +58,12 @@ const deleteNote = async (id) => {
       credentials: "same-origin", 
       headers: {
         "Content-Type": "application/json",
-        "auth-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjVkZWZmNjk5ZjZmZmRjZjZhNWMxYjFkIn0sImlhdCI6MTcwOTExMzE5M30.pXw0QkHSzxkLZOs-YkbFFOrWPRC5EiULUgxC3R-cl98"
+        "auth-token": localStorage.getItem('token')
         
       }
     });
     const json = response.json(); 
+    console.log(json) 
     const newNotes = notes.filter((note)=> {return note._id !== id})
     setNotes(newNotes)
     props.showAlert("Note Deleted", "info")
@@ -79,7 +80,7 @@ const editNote = async (id, title, description, tag) => {
     credentials: "same-origin", 
     headers: {
       "Content-Type": "application/json",
-      "auth-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjVkZWZmNjk5ZjZmZmRjZjZhNWMxYjFkIn0sImlhdCI6MTcwOTExMzE5M30.pXw0QkHSzxkLZOs-YkbFFOrWPRC5EiULUgxC3R-cl98"
+      "auth-token": localStorage.getItem('token')
       
     },
     redirect: "follow", 
@@ -87,7 +88,7 @@ const editNote = async (id, title, description, tag) => {
     body: JSON.stringify({title, description, tag}), 
   });
   const json = await response.json(); 
-
+  console.log(json)
     let newNotes = JSON.parse(JSON.stringify(notes))
     //logic
     for (let index = 0; index < newNotes.length; index++) {

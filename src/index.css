@@ -17,5 +17,12 @@ i{
 }
 
 .navbar {
-  margin-bottom : 0px
+  margin-bottom : 0px; 
+}
+.nav-form{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 150px;
+  padding: 0;
 }
